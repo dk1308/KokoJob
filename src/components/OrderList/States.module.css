@@ -1,0 +1,40 @@
+.state {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  padding: 2rem 1.25rem;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+
+.error {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--line));
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.error .title { color: var(--danger); }
+
+.body {
+  max-width: 42ch;
+  color: var(--ink-muted);
+}
+
+.action {
+  min-height: var(--tap);
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--surface);
+  font-weight: 600;
+}
+
+.action:hover {
+  background: color-mix(in srgb, var(--accent) 88%, var(--ink));
+}

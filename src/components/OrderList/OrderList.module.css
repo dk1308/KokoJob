@@ -1,0 +1,191 @@
+/*
+ * One DOM, two layouts. The list is a size container; below 720px of its
+ * OWN width each row is a card, at/above it the same rows become a table.
+ * Every cell keeps its grid-area in both layouts — nothing is hidden or
+ * duplicated, only repositioned. No JS is involved.
+ */
+.list {
+  container-type: inline-size;
+  container-name: list;
+}
+
+.rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);  /* long names must not widen the track */
+  gap: 0.5rem;
+}
+
+/* ---------- Card layout (default, < 720px) ---------- */
+
+.row {
+  display: grid;
+  grid-template:
+    "id       status"
+    "customer customer"
+    "meta     total" / auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  text-align: start;
+}
+
+button.row:hover {
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+}
+
+button.row:focus-visible {
+  outline-offset: -2px;
+}
+
+.header { display: none; }
+
+.id {
+  grid-area: id;
+  font-family: var(--mono);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.customer {
+  grid-area: customer;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rush {
+  flex: none;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.status {
+  grid-area: status;
+  justify-self: end;
+  display: flex;
+}
+
+.meta {
+  grid-area: meta;
+  display: flex;
+  gap: 0.4em;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.created::before {
+  content: '·';
+  margin-inline-end: 0.4em;
+}
+
+.total {
+  grid-area: total;
+  justify-self: end;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Table layout (container ≥ 720px) ---------- */
+
+@container list (min-width: 720px) {
+  .frame {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .rows { gap: 0; }
+
+  .header,
+  .row {
+    grid-template:
+      "id customer status items total created"
+      / 6.5rem minmax(0, 1fr) 8.5rem 4rem 7.5rem 5.5rem;
+    gap: 0 1rem;
+    padding: 0.625rem 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+  }
+
+  .rows > li:last-child > .row { border-bottom: 0; }
+
+  .header {
+    display: grid;
+    align-items: end;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  .header > .id { font-family: inherit; }
+
+  .status { justify-self: start; }
+
+  .meta { display: contents; }
+
+  .items {
+    grid-area: items;
+    justify-self: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .created { grid-area: created; }
+  .created::before { content: none; }
+
+  /* "items" stays in the accessible name; it's just not drawn. */
+  .unit {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+/* ---------- Skeleton (identical grid, so zero layout shift) ---------- */
+
+.bar {
+  display: inline-block;
+  height: 0.75em;
+  border-radius: 4px;
+  vertical-align: middle;
+  background: linear-gradient(
+    90deg,
+    var(--line) 0%,
+    color-mix(in srgb, var(--line) 40%, var(--surface)) 50%,
+    var(--line) 100%
+  ) 0 0 / 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.pill {
+  width: 5.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar { animation: none; }
+}
