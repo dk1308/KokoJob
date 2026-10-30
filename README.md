@@ -4,7 +4,7 @@ An orders console for people who check order status all day: search, filter, sor
 
 ## Live
 
-**TODO: add deploy URL** (Cloudflare Pages or Vercel, static build of `dist/`)
+No deployment is available yet.
 
 ## Run locally
 
@@ -39,7 +39,7 @@ Edits apply instantly, then save in the background. The fake API fails about 15%
 - **Rollback is per field, per order.** Before an edit, the hook remembers only the fields that edit touches. If the save fails, it restores just those fields, so a failure never undoes a different edit made while this one was in flight.
 - **The server echo is not trusted blindly.** The fake API merges onto its static record, which knows nothing about earlier edits. So on success the hook applies only the patch plus the server's `updatedAt`, rather than replacing the whole order.
 
-When a save fails, the toast says what failed and what happened: *"Could not save changes. The order was restored."*
+When a save fails, the toast says what failed and what happened: _"Could not save changes. The order was restored."_
 
 ### 3. No component library
 
@@ -56,15 +56,15 @@ A component library would have cost more bytes than the whole app, and still wou
 
 ### Measured
 
-| Check | Result |
-|---|---|
-| Lighthouse (mobile): Performance / Accessibility / Best Practices / SEO | 100 / 100 / 100 / 100 |
-| Cumulative layout shift, load → filter → open panel → edit | 0 |
-| JS, gzipped | 54.7 KB (React DOM is ~45 KB of that) |
-| CSS, gzipped | 3.9 KB |
-| Horizontal scroll at 320 / 375 / 768 / 1024 / 1440 | none |
-| Tap targets at 320 and 375 | all ≥ 44px |
-| Keyboard-only: tab order, Enter opens, trap, Esc, focus return, Back | pass |
+| Check                                                                   | Result                                |
+| ----------------------------------------------------------------------- | ------------------------------------- |
+| Lighthouse (mobile): Performance / Accessibility / Best Practices / SEO | 100 / 100 / 100 / 100                 |
+| Cumulative layout shift, load → filter → open panel → edit              | 0                                     |
+| JS, gzipped                                                             | 54.7 KB (React DOM is ~45 KB of that) |
+| CSS, gzipped                                                            | 3.9 KB                                |
+| Horizontal scroll at 320 / 375 / 768 / 1024 / 1440                      | none                                  |
+| Tap targets at 320 and 375                                              | all ≥ 44px                            |
+| Keyboard-only: tab order, Enter opens, trap, Esc, focus return, Back    | pass                                  |
 
 ## Next, with more time
 
@@ -76,10 +76,10 @@ A component library would have cost more bytes than the whole app, and still wou
 
 ## Time spent per phase
 
-| Phase | Scope | Time |
-|---|---|---|
-| 1. Layout spine | Scaffold, tokens, data, `useOrders`, container-query rows | TODO |
-| 2. Interaction | Toolbar, filter/sort, URL sync, four list states | TODO |
-| 3. Panel | Drawer/sheet, inline edit, rollback, toast, focus trap | TODO |
-| 4. Finish | PWA, Lighthouse, README, recording | TODO |
-| **Total** | | **TODO** |
+| Phase           | Scope                                                     | Time     |
+| --------------- | --------------------------------------------------------- | -------- |
+| 1. Layout spine | Scaffold, tokens, data, `useOrders`, container-query rows | TODO     |
+| 2. Interaction  | Toolbar, filter/sort, URL sync, four list states          | TODO     |
+| 3. Panel        | Drawer/sheet, inline edit, rollback, toast, focus trap    | TODO     |
+| 4. Finish       | PWA, Lighthouse, README, recording                        | TODO     |
+| **Total**       |                                                           | **TODO** |
