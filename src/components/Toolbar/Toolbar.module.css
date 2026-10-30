@@ -1,0 +1,157 @@
+.toolbar {
+  container-type: inline-size;
+}
+
+.inner {
+  display: grid;
+  grid-template:
+    "search search"
+    "sort   sort"
+    "chips  chips"
+    "count  demo" / minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ---------- Search ---------- */
+
+.search {
+  grid-area: search;
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.input,
+.select {
+  width: 100%;
+  height: var(--tap);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  font-size: 1rem; /* 16px keeps iOS from zooming on focus */
+}
+
+.input {
+  padding: 0 0.75rem 0 2.25rem;
+}
+
+.input::placeholder { color: var(--ink-muted); }
+
+/* ---------- Sort ---------- */
+
+.sort {
+  grid-area: sort;
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  padding: 0 2.25rem 0 0.75rem;
+}
+
+.chevron {
+  position: absolute;
+  inset-inline-end: 0.75rem;
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+/* ---------- Status chips ---------- */
+
+.chips {
+  grid-area: chips;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: var(--tap);
+  padding: 0 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.chip:hover { border-color: var(--ink-muted); }
+
+.chip[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: var(--ink);
+}
+
+.check {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--accent);
+}
+
+/* ---------- Count + demo control ---------- */
+
+.count {
+  grid-area: count;
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 8.5rem; /* "9 of 60" → "12 of 60" must not nudge the demo toggle */
+}
+
+.demo {
+  grid-area: demo;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--tap);
+  padding: 0 0.75rem;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.demo input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--danger);
+}
+
+.demo:has(input:checked) {
+  border-style: solid;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ---------- Wide toolbar ---------- */
+
+@container (min-width: 720px) {
+  .inner {
+    grid-template:
+      "search search sort"
+      "chips  count  demo" / minmax(0, 1fr) auto auto;
+    column-gap: 1rem;
+  }
+
+  .sort { width: 13rem; }
+
+  .chip { min-height: 2.25rem; }
+  .demo { min-height: 2.25rem; }
+}
