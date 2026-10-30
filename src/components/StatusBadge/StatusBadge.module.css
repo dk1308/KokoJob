@@ -1,0 +1,61 @@
+/*
+ * Each status gets a hue AND a shape, so the system still reads in
+ * greyscale or for a colour-blind user:
+ *   pending ○  processing ◐  shipped ◆  delivered ●  cancelled –
+ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  height: 1.5rem;
+  padding: 0 0.55rem 0 0.45rem;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+.glyph {
+  flex: none;
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  color: var(--fg);
+}
+
+.pending    { --fg: var(--pending-fg);    --bg: var(--pending-bg); }
+.processing { --fg: var(--processing-fg); --bg: var(--processing-bg); }
+.shipped    { --fg: var(--shipped-fg);    --bg: var(--shipped-bg); }
+.delivered  { --fg: var(--delivered-fg);  --bg: var(--delivered-bg); }
+.cancelled  { --fg: var(--cancelled-fg);  --bg: var(--cancelled-bg); }
+
+.glyph.pending {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+.glyph.processing {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+.glyph.shipped {
+  background: currentColor;
+  transform: rotate(45deg) scale(0.85);
+}
+.glyph.delivered {
+  background: currentColor;
+  border-radius: 50%;
+}
+.glyph.cancelled {
+  height: 2px;
+  background: currentColor;
+}
+
+.badge.cancelled {
+  font-weight: 500;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
